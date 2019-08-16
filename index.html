@@ -56,11 +56,27 @@
 
 				<!-- use key with v-bind when looping and creating elements -->
 				<div v-for="variant in variants" :key="variant.variantId">
-					<p>
+					<!-- v-on has a short cut: @ -->
+					<!-- can call a method and pass a property to it -->
+					<p @mouseover="updateProduct(variant.variantImage)">
 						{{ variant.variantColor }}
 					</p>
 				</div>
 
+				<!-- v-on is used to listen for then handle events -->
+				<!-- events: click, mouseover, submit, keyup -->
+				<!-- can write expression (itemsInCart += 1) or call a method -->
+				<button v-on:click="addToCart">
+					Add to Cart
+				</button>
+
+				<button @click="removeFromCart">
+					Remove from Cart
+				</button>
+
+				<div class="cart">
+					<p>Cart({{ itemsInCart }})</p>
+				</div>
 			</div>
 		</div>
 	</div>
