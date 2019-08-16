@@ -5,7 +5,7 @@ const app = new Vue({
 	data: {
 		product: "Socks",
 		image: "./assets/vmSocks-green.jpg",
-		inventory: 8,
+		inventory: 0,
 		onSale: true,
 		details: [
 			"80% cotton",

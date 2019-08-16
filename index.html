@@ -33,7 +33,10 @@
 				<p v-else-if="inventory <= 10 && inventory > 0">
 					Almost Gone
 				</p>
-				<p v-else>
+				<p
+					v-else
+					:class="{ outOfStock: inventory === 0 }"
+				>
 					Out of Stock
 				</p>
 
@@ -55,18 +58,28 @@
 				</ul>
 
 				<!-- use key with v-bind when looping and creating elements -->
-				<div v-for="variant in variants" :key="variant.variantId">
-					<!-- v-on has a short cut: @ -->
-					<!-- can call a method and pass a property to it -->
-					<p @mouseover="updateProduct(variant.variantImage)">
-						{{ variant.variantColor }}
-					</p>
+				<!-- v-on has a short cut: @ -->
+				<!-- can call a method with v-on/@ and pass a property to it -->
+				<!-- :style uses style binding so you can reference data in the style properties -->
+				<!-- can also bind to a styleObject that lives in data instead of listing individual styles -->
+				<div
+					v-for="variant in variants"
+					class="color-box"
+					:key="variant.variantId"
+					:style="{ backgroundColor: variant.variantColor }"
+					@mouseover="updateProduct(variant.variantImage)"
+				>
 				</div>
 
 				<!-- v-on is used to listen for then handle events -->
 				<!-- events: click, mouseover, submit, keyup -->
 				<!-- can write expression (itemsInCart += 1) or call a method -->
-				<button v-on:click="addToCart">
+				<!-- conditionally add a class by using an object where the key is the class name and value is an expression for if it is added -->
+				<button
+					v-on:click="addToCart"
+					:class="{ disabledButton: inventory === 0 }"
+					:disabled="inventory === 0"
+				>
 					Add to Cart
 				</button>
 

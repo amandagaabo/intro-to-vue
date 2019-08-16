@@ -56,8 +56,17 @@ button {
 	font-size: 14px;
 }
 
+button:hover,
+.color-box:hover {
+	cursor: pointer
+}
+
 .disabledButton {
 	background-color: #d8d8d8;
+}
+
+.disabledButton:hover {
+	cursor: not-allowed;
 }
 
 .review-form {
@@ -86,4 +95,8 @@ textarea {
 .activeTab {
 	color: #16C0B0;
 	text-decoration: underline;
+}
+
+.outOfStock {
+	text-decoration: line-through;
 }
