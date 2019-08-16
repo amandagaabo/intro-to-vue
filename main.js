@@ -3,10 +3,9 @@ const app = new Vue({
 	el: "#app",
 	// variables that you want access to in the html
 	data: {
+		brand: "Vue Mastery",
 		product: "Socks",
-		image: "./assets/vmSocks-green.jpg",
-		inventory: 0,
-		onSale: true,
+		selectedVariant: 0,
 		details: [
 			"80% cotton",
 			"20% polyester",
@@ -16,31 +15,61 @@ const app = new Vue({
 			{
 				variantId: 2234,
 				variantColor: "green",
-				variantImage: "./assets/vmSocks-green.jpg"
+				variantImage: "./assets/vmSocks-green.jpg",
+				variantQuantity: 3,
+				variantItemsInCart: 0,
+				variantOnSale: true
 			},
 			{
 				variantId: 2235,
 				variantColor: "blue",
-				variantImage: "./assets/vmSocks-blue.jpg"
+				variantImage: "./assets/vmSocks-blue.jpg",
+				variantQuantity: 15,
+				variantItemsInCart: 0,
+				variantOnSale: false
 			}
 		],
 		sizes: [
 			"S",
 			"M",
 			"L"
-		],
-		itemsInCart: 0
+		]
 	},
 	methods: {
 		addToCart: function () {
-			this.itemsInCart += 1;
+			if (this.variants[this.selectedVariant].variantQuantity > 0) {
+				this.variants[this.selectedVariant].variantItemsInCart += 1
+				this.variants[this.selectedVariant].variantQuantity -= 1
+			}
 		},
 		removeFromCart: function () {
-			if (this.itemsInCart > 0) this.itemsInCart -= 1;
-			else this.itemsInCart = 0;
+			if (this.variants[this.selectedVariant].variantItemsInCart > 0) {
+				this.variants[this.selectedVariant].variantItemsInCart -= 1
+				this.variants[this.selectedVariant].variantQuantity += 1
+			}
 		},
-		updateProduct: function (variantImage) {
-			this.image = variantImage;
+		updateProduct: function (index) {
+			this.selectedVariant = index;
+		}
+	},
+	computed: {
+		title() {
+			return this.brand + " " + this.product
+		},
+		onSale() {
+			return this.variants[this.selectedVariant].variantOnSale
+		},
+		inventory() {
+			return this.variants[this.selectedVariant].variantQuantity
+		},
+		image() {
+			return this.variants[this.selectedVariant].variantImage
+		},
+		itemsInCart() {
+			return this.variants[this.selectedVariant].variantItemsInCart
+		},
+		saleMessage() {
+			return this.brand + " " + this.product + "are on sale!"
 		}
 	}
 })

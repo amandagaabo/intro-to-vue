@@ -21,7 +21,7 @@
 			<div class="product-info">
 				<h1>
 					<!-- {{ }} = expression, where you can use Vue data -->
-					{{ product }}
+					{{ title }}
 				</h1>
 
 				<!-- v-if, v-else-if and v-else are used to conditionally display something -->
@@ -40,9 +40,9 @@
 					Out of Stock
 				</p>
 
-				<span v-if="onSale">
-					On Sale!
-				</span>
+				<p v-if="onSale">
+					{{ saleMessage }}
+				</p>
 
 				<ul>
 					<!-- v-for is used to loop over data in array or object -->
@@ -63,11 +63,11 @@
 				<!-- :style uses style binding so you can reference data in the style properties -->
 				<!-- can also bind to a styleObject that lives in data instead of listing individual styles -->
 				<div
-					v-for="variant in variants"
+					v-for="variant, index in variants"
 					class="color-box"
 					:key="variant.variantId"
 					:style="{ backgroundColor: variant.variantColor }"
-					@mouseover="updateProduct(variant.variantImage)"
+					@mouseover="updateProduct(index)"
 				>
 				</div>
 
@@ -76,14 +76,18 @@
 				<!-- can write expression (itemsInCart += 1) or call a method -->
 				<!-- conditionally add a class by using an object where the key is the class name and value is an expression for if it is added -->
 				<button
-					v-on:click="addToCart"
+					@click="addToCart"
 					:class="{ disabledButton: inventory === 0 }"
 					:disabled="inventory === 0"
 				>
 					Add to Cart
 				</button>
 
-				<button @click="removeFromCart">
+				<button
+					@click="removeFromCart"
+					:class="{ disabledButton: itemsInCart === 0 }"
+					:disabled="itemsInCart === 0"
+				>
 					Remove from Cart
 				</button>
 
