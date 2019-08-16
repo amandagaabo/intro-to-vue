@@ -3,17 +3,31 @@
 <head>
 	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 	<title>Product App</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
 </head>
 
 <body>
+	<div class="nav-bar"></div>
+
 	<div id="app">
-		<h1>
-			<!-- {{ }} = expression, where you can use Vue data -->
-			{{ product }}
-		</h1>
-		<p>
-			{{ description }}
-		</p>
+		<div class="product">
+			<div class="product-image">
+				<!-- v-bind is used when you want the attribute (src) to update when data changes -->
+				<!-- shorthand for v-bind is just :attribute -->
+				<!-- attributes: href, alt, title, class, style, disabled, src, etc -->
+				<img v-bind:src="image"/>
+			</div>
+
+			<div class="product-info">
+				<h1>
+					<!-- {{ }} = expression, where you can use Vue data -->
+					{{ product }}
+				</h1>
+				<a :href="link" target="_blank">
+					See more products like this
+				</a>
+			</div>
+		</div>
 	</div>
 
 	<script src="https://cdn.jsdelivr.net/npm/vue"></script>

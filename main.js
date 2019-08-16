@@ -4,6 +4,7 @@ const app = new Vue({
 	// variables that you want access to in the html
 	data: {
 		product: "Socks",
-		description: "Wool socks to keep your feet warm in the winter."
+		image: "./assets/vmSocks-green.jpg",
+		link: "https://www.amazon.com/s/ref=nb_sb_noss?url=search-alias%3Daps&field-keywords=socks"
 	}
 })
