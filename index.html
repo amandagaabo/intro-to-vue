@@ -23,6 +23,7 @@
 					<!-- {{ }} = expression, where you can use Vue data -->
 					{{ product }}
 				</h1>
+
 				<!-- v-if, v-else-if and v-else are used to conditionally display something -->
 				<!-- v-if adds or removes the element from the dom -->
 				<!-- use v-show to toggle visibility if the view will be toggled a lot for better perforance -->
@@ -39,6 +40,27 @@
 				<span v-if="onSale">
 					On Sale!
 				</span>
+
+				<ul>
+					<!-- v-for is used to loop over data in array or object -->
+					<li v-for="detail in details">
+						{{ detail }}
+					</li>
+				</ul>
+
+				<ul>
+					<li v-for="size in sizes">
+						{{ size }}
+					</li>
+				</ul>
+
+				<!-- use key with v-bind when looping and creating elements -->
+				<div v-for="variant in variants" :key="variant.variantId">
+					<p>
+						{{ variant.variantColor }}
+					</p>
+				</div>
+
 			</div>
 		</div>
 	</div>
