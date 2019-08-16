@@ -23,9 +23,22 @@
 					<!-- {{ }} = expression, where you can use Vue data -->
 					{{ product }}
 				</h1>
-				<a :href="link" target="_blank">
-					See more products like this
-				</a>
+				<!-- v-if, v-else-if and v-else are used to conditionally display something -->
+				<!-- v-if adds or removes the element from the dom -->
+				<!-- use v-show to toggle visibility if the view will be toggled a lot for better perforance -->
+				<p v-if="inventory > 10">
+					In Stock
+				</p>
+				<p v-else-if="inventory <= 10 && inventory > 0">
+					Almost Gone
+				</p>
+				<p v-else>
+					Out of Stock
+				</p>
+
+				<span v-if="onSale">
+					On Sale!
+				</span>
 			</div>
 		</div>
 	</div>
