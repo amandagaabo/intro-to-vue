@@ -1,3 +1,6 @@
+// enable dev tools
+Vue.config.devtools = true;
+
 Vue.component("product-details", {
 	props: {
 		details: {
@@ -98,15 +101,9 @@ Vue.component("product", {
 
 			<button
 				@click="removeFromCart"
-				:class="{ disabledButton: itemsInCart === 0 }"
-				:disabled="itemsInCart === 0"
 			>
 				Remove from Cart
 			</button>
-
-			<div class="cart">
-				<p>Cart({{ itemsInCart }})</p>
-			</div>
 		</div>
 	</div>
 	`,
@@ -127,7 +124,6 @@ Vue.component("product", {
 					variantColor: "green",
 					variantImage: "./assets/vmSocks-green.jpg",
 					variantQuantity: 3,
-					variantItemsInCart: 0,
 					variantOnSale: true
 				},
 				{
@@ -135,7 +131,6 @@ Vue.component("product", {
 					variantColor: "blue",
 					variantImage: "./assets/vmSocks-blue.jpg",
 					variantQuantity: 15,
-					variantItemsInCart: 0,
 					variantOnSale: false
 				}
 			],
@@ -148,16 +143,11 @@ Vue.component("product", {
 	},
 	methods: {
 		addToCart: function () {
-			if (this.variants[this.selectedVariant].variantQuantity > 0) {
-				this.variants[this.selectedVariant].variantItemsInCart += 1
-				this.variants[this.selectedVariant].variantQuantity -= 1
-			}
+			// emit event, takes event name and params to pass to method
+			this.$emit("add-to-cart", this.variants[this.selectedVariant].variantId)
 		},
 		removeFromCart: function () {
-			if (this.variants[this.selectedVariant].variantItemsInCart > 0) {
-				this.variants[this.selectedVariant].variantItemsInCart -= 1
-				this.variants[this.selectedVariant].variantQuantity += 1
-			}
+			this.$emit("remove-from-cart", this.variants[this.selectedVariant].variantId)
 		},
 		updateProduct: function (index) {
 			this.selectedVariant = index;
@@ -176,9 +166,6 @@ Vue.component("product", {
 		image() {
 			return this.variants[this.selectedVariant].variantImage
 		},
-		itemsInCart() {
-			return this.variants[this.selectedVariant].variantItemsInCart
-		},
 		saleMessage() {
 			return this.brand + " " + this.product + " are on sale!"
 		},
@@ -194,6 +181,21 @@ const app = new Vue({
 	// connects to div in html with id app
 	el: "#app",
 	data: {
-		premium: true
+		premium: true,
+		cart: []
+	},
+	methods: {
+		addItem(id) {
+			this.cart.push(id)
+		},
+		removeItem(id) {
+			for(let i = this.cart.length - 1; i >= 0; i--) {
+				if (this.cart[i] === id) {
+					this.cart.splice(i, 1);
+					// only return one so escape after one is removed
+					return;
+				}
+			}
+		}
 	}
 })
